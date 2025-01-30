@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="flex justify-center pt-44 h-full w-full bg-blue-300">
+    <div class="h-80 p-2 w-[45%] bg-slate-300 rounded-xl border-black">
+      <div class="flex ml-2 flex-col">
+        <div class="flex items-center gap-4">
+          <label class="rocker rocker-small">
+            <input value="true" id="abc" type="checkbox" />
+            <span class="switch-left">Yes</span>
+            <span class="switch-right">No</span>
+          </label>
+          <label for="abc" class="text-2xl">Include Alphabet chracters</label>
+        </div>
+        <div class="flex items-center gap-4">
+          <label class="rocker rocker-small">
+            <input id="number" value="true" type="checkbox" />
+            <span class="switch-left">Yes</span>
+            <span class="switch-right">No</span>
+          </label>
+          <label for="number" class="text-2xl">Include Numbers </label>
+        </div>
+        <div class="flex items-center gap-4">
+          <label class="rocker rocker-small">
+            <input id="special" value="true" type="checkbox" />
+            <span class="switch-left">Yes</span>
+            <span class="switch-right">No</span>
+          </label>
+          <label for="special" class="text-2xl"
+            >Include special chracters</label
+          >
+        </div>
+        <div class="pl-4 rounded-xl w-[80%]">
+          <input
+            id="length"
+            placeholder="define length"
+            type="number"
+            class="p-1 bg-blue-400 rounded-lg mt-2 w-[70%]"
+          />
+        </div>
+      </div>
+      <div>
+        <button
+          onclick="passwordGenerator()"
+          class="p-2 bg-blue-600 rounded-lg mt-2 ml-4 w-[90%]"
+        >
+          Generate Password
+        </button>
+        <div class="flex justify-center">
+          <textarea
+            readonly
+            name="passwords"
+            id="output"
+            class="w-[95%] h-10 text-xl text-center pt-2 mt-2 bg-rose-400"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <style>
+      .rocker {
+        display: inline-block;
+        position: relative;
+
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        color: #888;
+        width: 7em;
+        height: 4em;
+        overflow: hidden;
+        border-bottom: 0.5em solid #eee;
+      }
+
+      .rocker-small {
+        font-size: 0.75em;
+        /* Sizes the switch */
+        /* margin: 1em; */
+      }
+
+      .rocker::before {
+        content: "";
+        position: absolute;
+        top: 0.5em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #999;
+        border: 0.5em solid #eee;
+        border-bottom: 0;
+      }
+
+      .rocker input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .switch-left,
+      .switch-right {
+        cursor: pointer;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.5em;
+        width: 3em;
+        transition: 0.2s;
+        user-select: none;
+      }
+
+      .switch-left {
+        height: 2.4em;
+        width: 2.75em;
+        left: 0.85em;
+        bottom: 0.4em;
+        background-color: #ddd;
+        transform: rotate(15deg) skewX(15deg);
+      }
+
+      .switch-right {
+        right: 0.5em;
+        bottom: 0;
+        background-color: #bd5757;
+        color: #fff;
+      }
+
+      .switch-left::before,
+      .switch-right::before {
+        content: "";
+        position: absolute;
+        width: 0.4em;
+        height: 2.45em;
+        bottom: -0.45em;
+        background-color: #ccc;
+        transform: skewY(-65deg);
+      }
+
+      .switch-left::before {
+        left: -0.4em;
+      }
+
+      .switch-right::before {
+        right: -0.375em;
+        background-color: transparent;
+        transform: skewY(65deg);
+      }
+
+      input:checked + .switch-left {
+        background-color: #0084d0;
+        color: #fff;
+        bottom: 0px;
+        left: 0.5em;
+        height: 2.5em;
+        width: 3em;
+        transform: rotate(0deg) skewX(0deg);
+      }
+
+      input:checked + .switch-left::before {
+        background-color: transparent;
+        width: 3.0833em;
+      }
+
+      input:checked + .switch-left + .switch-right {
+        background-color: #ddd;
+        color: #888;
+        bottom: 0.4em;
+        right: 0.8em;
+        height: 2.4em;
+        width: 2.75em;
+        transform: rotate(-15deg) skewX(-15deg);
+      }
+
+      input:checked + .switch-left + .switch-right::before {
+        background-color: #ccc;
+      }
+
+      /* Keyboard Users */
+      input:focus + .switch-left {
+        color: #333;
+      }
+
+      input:checked:focus + .switch-left {
+        color: #fff;
+      }
+
+      input:focus + .switch-left + .switch-right {
+        color: #fff;
+      }
+
+      input:checked:focus + .switch-left + .switch-right {
+        color: #333;
+      }
+
+      /* --------------------------------- */
+      /* From Uiverse.io by namecho */
+      button,
+      button::after {
+        padding: 16px 20px;
+        font-size: 18px;
+        background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+        border: 0;
+        color: #fff;
+        letter-spacing: 3px;
+        line-height: 1;
+        box-shadow: 6px 0px 0px #00e6f6;
+        outline: transparent;
+        position: relative;
+      }
+
+      button::after {
+        --slice-0: inset(50% 50% 50% 50%);
+        --slice-1: inset(80% -6px 0 0);
+        --slice-2: inset(50% -6px 30% 0);
+        --slice-3: inset(10% -6px 85% 0);
+        --slice-4: inset(40% -6px 43% 0);
+        --slice-5: inset(80% -6px 5% 0);
+        content: "HOVER ME";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 3%,
+          #00e6f6 3%,
+          #00e6f6 5%,
+          #ff013c 5%
+        );
+        text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+        clip-path: var(--slice-0);
+      }
+
+      button:hover::after {
+        animation: 1s glitch;
+        animation-timing-function: steps(2, end);
+      }
+
+      @keyframes glitch {
+        0% {
+          clip-path: var(--slice-1);
+          transform: translate(-20px, -10px);
+        }
+
+        10% {
+          clip-path: var(--slice-3);
+          transform: translate(10px, 10px);
+        }
+
+        20% {
+          clip-path: var(--slice-1);
+          transform: translate(-10px, 10px);
+        }
+
+        30% {
+          clip-path: var(--slice-3);
+          transform: translate(0px, 5px);
+        }
+
+        40% {
+          clip-path: var(--slice-2);
+          transform: translate(-5px, 0px);
+        }
+
+        50% {
+          clip-path: var(--slice-3);
+          transform: translate(5px, 0px);
+        }
+
+        60% {
+          clip-path: var(--slice-4);
+          transform: translate(5px, 10px);
+        }
+
+        70% {
+          clip-path: var(--slice-2);
+          transform: translate(-10px, 10px);
+        }
+
+        80% {
+          clip-path: var(--slice-5);
+          transform: translate(20px, -10px);
+        }
+
+        90% {
+          clip-path: var(--slice-1);
+          transform: translate(-10px, 0px);
+        }
+
+        100% {
+          clip-path: var(--slice-1);
+          transform: translate(0);
+        }
+      }
+
+      /* --------------------------------- */
+    </style>
+    <script src="app.js"></script>
+  </body>
+</html>
